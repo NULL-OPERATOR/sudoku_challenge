@@ -1,9 +1,8 @@
 class Cell
-  def initialize(current_cell, relevant_cells)
-    @relevant_cells = relevant_cells
-    @current_cell = current_cell
+  FULL_SET = [0,1,2,3,4,5,6,7,8,9]
+
+  def solve(relevant_cells)
+    FULL_SET - @relevant_cells
   end
 
-  def solve
-    
-  end
+end
