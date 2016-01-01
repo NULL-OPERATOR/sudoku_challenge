@@ -20,11 +20,21 @@ describe Grid do
   end
 
 end
-#
-# ['0 1 5|0 0 3|0 0 2'],
-# ['0 0 0|1 0 0|9 0 6'],
+# box A = [1,1]
+# box B = [2,1]
+# box C = [3,1]
+#  if col < 3 === A, then
+#    col > 5 === C, then
+#       else === B
+#    then +1 the second num, until it gets to 9
+#    then +1 the first
+
+# box1    box2    box3
+# ['0 1 5|0 0 3|0 0 2'],  2 = row1 col9 box3 === {[1,9,3]: 2}
+# ['0 0 0|1 0 0|9 0 6'],  9 = row2 col7 box3 === {[2,7,3]: 9}
 # ['2 7 0|0 6 8|4 3 0'],
 # ['----------------'],
+#  box4  etc..
 # ['4 9 0|0 0 2|0 1 7'],
 # ['5 0 1|0 4 0|3 8 0'],
 # ['0 0 3|9 0 5|0 0 0'],
