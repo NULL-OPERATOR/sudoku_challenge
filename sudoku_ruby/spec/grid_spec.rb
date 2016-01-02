@@ -29,7 +29,7 @@ end
 #    then +1 the second num, until it gets to 9
 #    then +1 the first
 
-# [id, row, col, box, cell.to_i]
+# [id, row, col, box, cell_num]
 
   # col -------->
 # box1    box2    box3

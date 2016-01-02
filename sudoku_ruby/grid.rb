@@ -1,20 +1,26 @@
 require_relative "cell.rb"
-require_relative "grid_setup.rb"
 
 class Grid
-  DEF_GRID = '015003002000100906270068430490002017501040380003905000900081040860070025037204600'
-  attr_reader :cells, :output
+  attr_reader :cells, :output, :choices
 
-  def initialize(input_grid=DEF_GRID, grid_setup_klass=nil, cell_klass=nil)
-    @gridsetup = grid_setup_klass || GridSetup.new
-    @cells = @gridsetup.new_grid(input_grid)
+  def initialize(cells, cell_klass=nil)
+    @cells = cells
     @Cell_klass = cell_klass || Cell.new
+    @choices = Array.new(81){ [] }
+    @attempts = 0
+  end
+
+  def initial_solve
+    return false if @attempts >=2
+    @attempts += 1
+    output = cells.map{ |cell| solved?(cell) ? cell[4] : solve_cell(cell) }
   end
 
   def solve
-    output = cells.map{ |cell| solved?(cell) ? cell[4] : solve_cell(cell) }
-    output.include?(0) ? solve : output.join
+    output = initial_solve
+    output.include?(0) ? initial_solve : output.join
   end
+
 
   private
 
@@ -23,9 +29,19 @@ class Grid
   end
 
   def solve_cell(cur_cell)
-    val = @Cell_klass.solve(cells_needed(cur_cell))
+    output = @Cell_klass.solve(cells_needed(cur_cell))
+    update_choices(output, cur_cell)
+    update_cells(output, cur_cell)
+  end
+
+  def update_cells(output, cur_cell)
+    val = output.length > 1 ? 0 : output[0]
     @cells[cur_cell[0]][4] = val
     val
+  end
+
+  def update_choices(val, cur_cell)
+    @choices[cur_cell[0]] = val
   end
 
   def cells_needed(cur_cell)
