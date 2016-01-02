@@ -3,7 +3,7 @@ class Cell
 
   def solve(input_cells)
     output = FULL_SET - input_cells
-    output.length > 1 ? nil : output[0]
+    output.length > 1 ? 0 : output[0]
   end
 
 end
