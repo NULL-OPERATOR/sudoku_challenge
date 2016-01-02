@@ -6,9 +6,7 @@ class Grid
   attr_reader :cells, :output
 
   def initialize(input_grid=nil, grid_setup=nil, cell=nil)
-    # grid_setup(input_grid)
     @gridsetup = grid_setup || GridSetup.new
-    # @boxes = [[1,1],[2,1],[3,1]]
     @cells = @gridsetup.new_grid(DEF_GRID)
     @cell_klass = cell || Cell.new
   end
@@ -36,52 +34,9 @@ class Grid
 
   private
 
-  # def grid_setup(input_grid)
-  #   row, col = 1, 1
-  #   id = 0
-  #   @cells = input_grid.split(//).map do |cell|
-  #
-  #     box = get_box(col)
-  #
-  #     a = [id, row, col, box, cell.to_i]
-  #     id += 1
-  #     if col == 9
-  #       row += 1
-  #       col = 1
-  #     else
-  #       col += 1
-  #     end
-  #     a
-  #   end
-  # end
-
   def solved?(cur_cell)
     cur_cell[4] != 0
   end
-
-  # def get_box(col)
-  #   if col < 4
-  #     box = @boxes[0][0]
-  #     box_update(0)
-  #   elsif col > 6
-  #     box = @boxes[2][0]
-  #     box_update(2)
-  #   else
-  #     box = @boxes[1][0]
-  #     box_update(1)
-  #   end
-  #   box
-  # end
-  #
-  # def box_update(box)
-  #   if @boxes[box][1] == 9
-  #     @boxes[box][0] += 3
-  #     @boxes[box][1] = 1
-  #   else
-  #     @boxes[box][1] +=1
-  #   end
-  # end
-
 
   def solve_cell(cur_cell)
     val = @cell_klass.solve(cells_needed(cur_cell))
