@@ -1,7 +1,9 @@
-describe GridSetup
-  let :input_grid { '015003002000100906270068430490002017501040380003905000900081040860070025037204600' }
-  let :setup { described_class.new(input_grid)}
-  let :setup_grid { [[0, 1, 1, 1, 0],
+require_relative '../grid_setup'
+
+describe GridSetup do
+  let(:input_grid) { '015003002000100906270068430490002017501040380003905000900081040860070025037204600' }
+  subject(:gridsetup) { described_class.new }
+  let(:setup_grid) { [[0, 1, 1, 1, 0],
                      [1, 1, 2, 1, 1],
                      [2, 1, 3, 1, 5],
                      [3, 1, 4, 2, 0],
@@ -84,6 +86,6 @@ describe GridSetup
                      [80, 9, 9, 9, 0]] }
 
   it "sets up the grid as expected" do
-    expect(setup.new_grid).to eq setup_grid
+    expect(gridsetup.new_grid(input_grid)).to eq setup_grid
   end
 end

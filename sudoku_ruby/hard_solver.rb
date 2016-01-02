@@ -1,6 +1,6 @@
-require_relative "cell.rb"
-require_relative "grid_setup.rb"
-require_relative "grid.rb"
+require_relative "cell"
+require_relative "grid_setup"
+require_relative "grid"
 
 class HardSolver
   EASY_GRID = '015003002000100906270068430490002017501040380003905000900081040860070025037204600'
@@ -19,4 +19,15 @@ class HardSolver
     @current_grid.solve
   end
 
+  # if row/grid/bow isnt right-
+  #   break
+  # else continue adding numbers
+
+  # def solve
+  #   output = initial_solve
+  #   output.include?(0) ? initial_solve : output.join
+  # end
+  #
+  # return false if @attempts >=2
+  # @attempts += 1
 end

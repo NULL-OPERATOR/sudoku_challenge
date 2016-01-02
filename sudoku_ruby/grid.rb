@@ -1,4 +1,4 @@
-require_relative "cell.rb"
+require_relative "cell"
 
 class Grid
   attr_reader :cells, :output, :choices
@@ -7,13 +7,6 @@ class Grid
     @cells = cells
     @Cell_klass = cell_klass || Cell.new
     @choices = Array.new(81){ [] }
-    @attempts = 0
-  end
-
-  def initial_solve
-    return false if @attempts >=2
-    @attempts += 1
-    output = cells.map{ |cell| solved?(cell) ? cell[4] : solve_cell(cell) }
   end
 
   def solve
@@ -21,8 +14,11 @@ class Grid
     output.include?(0) ? initial_solve : output.join
   end
 
-
   private
+
+  def initial_solve
+    cells.map{ |cell| solved?(cell) ? cell[4] : solve_cell(cell) }
+  end
 
   def solved?(cur_cell)
     cur_cell[4] != 0
