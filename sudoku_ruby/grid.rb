@@ -29,8 +29,10 @@ class Grid
   end
 
   def cells_needed(cur_cell)
-    needed = cells.select{|c| c[1] == cur_cell[1] || c[2] == cur_cell[2] || c[3] == cur_cell[3]}
-    needed.map!{|x| x[4]}.uniq!
+    cell_list = cells.select do |c|
+      c[1] == cur_cell[1] || c[2] == cur_cell[2] || c[3] == cur_cell[3]
+    end
+    cell_list.map!{|cell| cell[4]}.uniq!
   end
 
 end

@@ -82,6 +82,7 @@ describe GridSetup
                      [78, 9, 7, 9, 6],
                      [79, 9, 8, 9, 0],
                      [80, 9, 9, 9, 0]] }
+
   it "sets up the grid as expected" do
     expect(setup.new_grid).to eq setup_grid
   end

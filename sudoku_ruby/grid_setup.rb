@@ -26,18 +26,22 @@ class GridSetup
   end
 
   def get_box
-    if @col < 4
-      box = @boxes[0][0]
-      box_update(0)
-    elsif @col > 6
-      box = @boxes[2][0]
-      box_update(2)
-    else
-      box = @boxes[1][0]
-      box_update(1)
-    end
+    val = box_value
+    box = @boxes[val][0]
+    box_update(val)
     box
   end
+
+  def box_value
+    if @col< 4
+      0
+    elsif @col > 6
+      2
+    else
+      1
+    end
+  end
+
 
   def box_update(box)
     if @boxes[box][1] == 9
