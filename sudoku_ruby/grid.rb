@@ -5,35 +5,25 @@ class Grid
 
   def initialize(cells, cell_klass=nil)
     @cells = cells
-    @Cell_klass = cell_klass || Cell.new
+    @cell_klass = cell_klass || Cell.new
     @choices = Array.new(81){ [] }
   end
 
   def solve
-    output = initial_solve
-    output.include?(0) ? initial_solve : output.join
+    cells.each{ |cell| solved?(cell) ? next : solve_cell(cell) }
   end
 
   private
-
-  def initial_solve
-    cells.map{ |cell| solved?(cell) ? cell[4] : solve_cell(cell) }
-  end
 
   def solved?(cur_cell)
     cur_cell[4] != 0
   end
 
   def solve_cell(cur_cell)
-    output = @Cell_klass.solve(cells_needed(cur_cell))
+    output = @cell_klass.solve(cells_needed(cur_cell))
     update_choices(output, cur_cell)
-    update_cells(output, cur_cell)
-  end
-
-  def update_cells(output, cur_cell)
     val = output.length > 1 ? 0 : output[0]
     @cells[cur_cell[0]][4] = val
-    val
   end
 
   def update_choices(val, cur_cell)
