@@ -1,13 +1,16 @@
 require_relative "cell.rb"
+require_relative "grid_setup.rb"
 
 class Grid
+  DEF_GRID = '015003002000100906270068430490002017501040380003905000900081040860070025037204600'
   attr_reader :cells, :output
 
-  def initialize(input_grid=nil, cell_klass=nil)
+  def initialize(input_grid=nil, grid_setup=nil, cell=nil)
     # grid_setup(input_grid)
-    @boxes = [[1,1],[2,1],[3,1]]
-    grid_setup('015003002000100906270068430490002017501040380003905000900081040860070025037204600')
-    @cell_klass = cell_klass || Cell.new
+    @gridsetup = grid_setup || GridSetup.new
+    # @boxes = [[1,1],[2,1],[3,1]]
+    @cells = @gridsetup.new_grid(DEF_GRID)
+    @cell_klass = cell || Cell.new
   end
 
   def solve
@@ -33,51 +36,51 @@ class Grid
 
   private
 
-  def grid_setup(input_grid)
-    row, col = 1, 1
-    id = 0
-    @cells = input_grid.split(//).map do |cell|
-
-      box = get_box(col)
-
-      a = [id, row, col, box, cell.to_i]
-      id += 1
-      if col == 9
-        row += 1
-        col = 1
-      else
-        col += 1
-      end
-      a
-    end
-  end
+  # def grid_setup(input_grid)
+  #   row, col = 1, 1
+  #   id = 0
+  #   @cells = input_grid.split(//).map do |cell|
+  #
+  #     box = get_box(col)
+  #
+  #     a = [id, row, col, box, cell.to_i]
+  #     id += 1
+  #     if col == 9
+  #       row += 1
+  #       col = 1
+  #     else
+  #       col += 1
+  #     end
+  #     a
+  #   end
+  # end
 
   def solved?(cur_cell)
     cur_cell[4] != 0
   end
 
-  def get_box(col)
-    if col < 4
-      box = @boxes[0][0]
-      box_update(0)
-    elsif col > 6
-      box = @boxes[2][0]
-      box_update(2)
-    else
-      box = @boxes[1][0]
-      box_update(1)
-    end
-    box
-  end
-
-  def box_update(box)
-    if @boxes[box][1] == 9
-      @boxes[box][0] += 3
-      @boxes[box][1] = 1
-    else
-      @boxes[box][1] +=1
-    end
-  end
+  # def get_box(col)
+  #   if col < 4
+  #     box = @boxes[0][0]
+  #     box_update(0)
+  #   elsif col > 6
+  #     box = @boxes[2][0]
+  #     box_update(2)
+  #   else
+  #     box = @boxes[1][0]
+  #     box_update(1)
+  #   end
+  #   box
+  # end
+  #
+  # def box_update(box)
+  #   if @boxes[box][1] == 9
+  #     @boxes[box][0] += 3
+  #     @boxes[box][1] = 1
+  #   else
+  #     @boxes[box][1] +=1
+  #   end
+  # end
 
 
   def solve_cell(cur_cell)
