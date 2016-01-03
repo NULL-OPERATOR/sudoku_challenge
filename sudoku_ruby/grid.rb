@@ -10,13 +10,22 @@ class Grid
   end
 
   def solve
-    cells.each{ |cell| solved?(cell) ? next : solve_cell(cell) }
+    2.times{ @cells.each{|cell| solver(cell)}}
+    !spaces?
   end
+
+  # def single_solve
+  #   @cells.each{|cell| solver(cell)}
+  # end
 
   private
 
-  def solved?(cur_cell)
-    cur_cell[4] != 0
+  def solver(cell)
+    cell[4] == 0 ? solve_cell(cell) : update_choices([cell[4]], cell)
+  end
+
+  def spaces?
+    @cells.map{|cell| cell[4] }.include?(0)
   end
 
   def solve_cell(cur_cell)
