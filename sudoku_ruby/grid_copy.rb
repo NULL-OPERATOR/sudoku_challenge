@@ -1,11 +1,16 @@
 require_relative "cell"
+require_relative "grid_setup"
+
 
 class Grid
   attr_reader :cells, :output, :choices
+  EASY_GRID = '015003002000100906270068430490002017501040380003905000900081040860070025037204600'
+  HARD_GRID = '800000000003600000070090200050007000000045700000100030001000068008500010090000400'
 
 
-  def initialize(cells, cell_klass=nil)
-    @cells = cells
+  def initialize(input_cells=EASY_GRID, cell_klass=nil)
+    @gridsetup = GridSetup.new
+    @cells = gridsetup.new_grid(input_cells)
     @cell_klass = cell_klass || Cell.new
     @choices = Array.new(81){ [] }
   end
@@ -13,6 +18,10 @@ class Grid
   def solve
     @cells.each{|cell| cell[4] == 0 ? solve_cell(cell) : next }#solver(cell)}
     !spaces?
+  end
+
+  def solve_hard
+    
   end
 
   # def single_solve

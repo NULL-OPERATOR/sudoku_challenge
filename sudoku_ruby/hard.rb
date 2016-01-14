@@ -5,6 +5,7 @@ require_relative "grid"
 class Hard
   EASY_GRID = '015003002000100906270068430490002017501040380003905000900081040860070025037204600'
   HARD_GRID = '800000000003600000070090200050007000000045700000100030001000068008500010090000400'
+      x=      '81275439 943628157673 9128415423769389  4572126716983543197456876859  13595816473'
 
   attr_reader :cells, :output, :grid
 
@@ -20,18 +21,64 @@ class Hard
   # def is_easy?
   #   2.times{@grid.solve}
   # end
+  def return_string
+    @grid.cells.map{ |cell| cell[4] }.join
+  end
+
+  # def solve
+  #   if @grid.solve
+  #     return_string
+  #   else
+  #     hard_mode
+  #     # return
+  #   end
+  # end
 
   def solve
-    if @grid.solve
-      @grid.cells.map{ |cell| cell[4] }.join
+    # try to solve again
+    # check_grid
+    init_choices = @grid.choices
+    gridsolved = @grid.solve
+    # p @grid.choices
+    # @counter = 0
+    if gridsolved
+      return_string
+    elsif @grid.choices != init_choices
+      solve
     else
-      # hard_mode
-      return
+      add_choices
+      #need a way of going back if bad ?
     end
   end
+
+  def add_choices
+    # start with the cells with the fewest choices
+    order = find_smallest_choices
+    cell = order[0][1]
+    # p "cell #{cell}"
+    # p cell.class
+    input = @grid.choices[cell].shift
+    # p input
+    @grid.cells[cell][4] = input
+
+    solve
+  end
+
+  def find_smallest_choices
+    # order = @grid.choices
+    a = @grid.choices.map.with_index do |cell, index|
+      cell == [] ? [] : [cell.length, index]
+    end
+    a.delete([])
+    a.sort_by! &:first
+  end
+
+
+
   #
   #
   # def brute
+
   #   choices = @grid.choices
   #   outcomes = []
   #   cell = 0
